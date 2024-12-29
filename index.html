@@ -1,0 +1,88 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chat Bot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #chat-log {
+      padding: 10px;
+      border: 1px solid #ccc;
+      width: 500px;
+      height: 300px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Chat Bot</h1>
+  <input id="user-input" type="text" placeholder="Type a message...">
+  <button id="send-button">Send</button>
+  <div id="chat-log"></div>
+    
+  <script>
+    const inputElement = document.getElementById('user-input');
+    const sendButton = document.getElementById('send-button');
+    const responseElement = document.getElementById('chat-log');
+    const apiEndPoint = 'http://localhost:3000/api/chat';
+    // let conversationContext = '';
+
+    sendButton.addEventListener('click', async () => {
+      const userInput = inputElement.value;
+      if (userInput.trim() === '')
+        return;
+
+      const newResponse = document.createElement('div');
+      newResponse.textContent = `You: ${userInput}`;
+      responseElement.appendChild(newResponse);
+
+      try {
+        const requestBody = {
+          "model": "llama2",
+          "messages": [{ "role": "user", "content": userInput }],
+          "stream": false
+        };
+
+        fetch(apiEndPoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestBody),
+        }).then(response => {
+          console.log('Received response:', response);
+          return response.json();
+        }).then(data => {
+          console.log('Parsed response data:', data);
+
+       
+
+
+
+          const botResponse = document.createElement('div');
+         
+          if (data && data.message && data.message.content) {
+            botResponse.textContent = `Bot: ${data.message.content}`;
+            responseElement.appendChild(botResponse);
+
+          } else {
+            console.error('Invalid response data:', data);
+            // You could also set a default text or handle this case differently
+            botResponse.textContent = 'Bot: Unable to retrieve response.';
+          }
+          responseElement.appendChild(botResponse)
+        }).catch((error) => console.error('Error:', error));
+      } catch (error) {
+        console.error(error);
+      }
+
+      inputElement.value = '';
+    });
+  </script>
+
+</body>
+
+</html>
