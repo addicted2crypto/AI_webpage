@@ -43,6 +43,7 @@
 
       try {
         const requestBody = {
+          //add models as an array with proxy
           "model": "llama2",
           "messages": [{ "role": "user", "content": userInput }],
           "stream": false
