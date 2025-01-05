@@ -17,19 +17,22 @@
       overflow-y: auto;
     }
   </style>
+  <script src="script.js"></script>
 </head>
 
 <body>
   <h1>Chat Bot</h1>
   <input id="user-input" type="text" placeholder="Type a message...">
   <button id="send-button">Send</button>
-  <div id="chat-log"></div>
+  <div id="chat-log">
+   
+  </div>
     
   <script>
     const inputElement = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
     const responseElement = document.getElementById('chat-log');
-    const apiEndPoint = 'http://localhost:11434/api/chat';
+    const apiEndPoint = 'http://localhost:2222/api/tags';
     // let conversationContext = '';
 
     sendButton.addEventListener('click', async () => {
@@ -44,7 +47,7 @@
       try {
         const requestBody = {
           //add models as an array with proxy
-          "model": "llama2",
+          "model": "Granite",
           "messages": [{ "role": "user", "content": userInput }],
           "stream": false
         };
