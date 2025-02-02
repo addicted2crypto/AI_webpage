@@ -54,7 +54,7 @@
 
         fetch(apiEndPoint, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json; charset=utf-8' },
+          headers: { 'Content-Type': 'application/json; charset=utf-8; Gzip, deflate, br, zstd'},
           body: JSON.stringify(requestBody),
         }).then(response => {
           console.log('Received response:', response);
