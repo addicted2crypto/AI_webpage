@@ -45,7 +45,7 @@ def send_post_request(base_url, endpoint):
     try:
         full_url = base_url + endpoint
         headers = {
-            'mode' : 'GET , POST, GET',
+            'mode' : 'GET , POST, GET, OPTIONS',
             
             'Content-Type': 'application/json',
             
@@ -71,7 +71,7 @@ def send_get_request(base_url, endpoint):
     try:
         full_url = base_url + endpoint
         headers = {
-            'mode' : 'GET',
+            'mode' : 'GET, POST, GET, OPTIONS',
             'Content-Type': 'application/json',
             # Add any other required headers here
         }
