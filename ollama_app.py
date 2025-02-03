@@ -45,9 +45,10 @@ def send_post_request(base_url, endpoint):
     try:
         full_url = base_url + endpoint
         headers = {
-            'mode' : 'POST',
+            'mode' : 'GET , POST, GET',
+            
             'Content-Type': 'application/json',
-            # Add any other required headers here
+            
         }
         data = {'message': 'Hello, world!'}  # Replace with your actual payload
         response = requests.post(full_url, headers=headers, json=data)
@@ -93,7 +94,7 @@ def send_get_request(base_url, endpoint):
 def main():
     base_url = 'http://localhost:2222'
     get_available_get_requests(base_url)
-    endpoint = '/api/test'
+    endpoint = '/api/chat'
     get_header_options(base_url, endpoint)
     send_post_request(base_url, endpoint)
     send_get_request(base_url, endpoint)
