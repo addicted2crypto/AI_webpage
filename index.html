@@ -17,7 +17,7 @@
       overflow-y: auto;
     }
   </style>
-  <!-- <script src="script.js"></script> -->
+
 </head>
 
 <body>
@@ -25,9 +25,9 @@
   <input id="user-input" type="text" placeholder="Type a message...">
   <button id="send-button">Send</button>
   <div id="chat-log">
-   
+
   </div>
-    
+
   <script>
     const inputElement = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
@@ -46,45 +46,56 @@
 
       try {
         const requestBody = {
-          //add models as an array with proxy
           "model": "phi4:14b-q8_0",
           "messages": [{ "role": "user", "content": userInput }],
           "stream": false
         };
 
-        fetch(apiEndPoint, {
+        const response = await fetch(apiEndPoint, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json; charset=utf-8; Gzip, deflate, br, zstd'},
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json; charset=utf-8;' },
           body: JSON.stringify(requestBody),
-        }).then(response => {
-          console.log('Received response:', response);
-          return response.json();
-        }).then(data => {
-          console.log('Parsed response data:', data);
+        });
 
-       
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
+        const responseText = await response.text();
+        console.log('Response text:', responseText);
 
+        try {
+          const jsonData = JSON.parse(responseText);
+          console.log('Parsed response data:', jsonData);
 
           const botResponse = document.createElement('div');
-         
-          if (data && data.message && data.message.content) {
-            botResponse.textContent = `Bot: ${data.message.content}`;
-            responseElement.appendChild(botResponse);
-
+          if (jsonData && jsonData.message && jsonData.message.content) {
+            botResponse.textContent = `Bot: ${jsonData.message.content}`;
           } else {
-            console.error('Invalid response data:', data);
-            // You could also set a default text or handle this case differently
+            console.error('Invalid response data:', jsonData);
             botResponse.textContent = 'Bot: Unable to retrieve response.';
           }
-          responseElement.appendChild(botResponse)
-        }).catch((error) => console.error('Error:', error));
+          responseElement.appendChild(botResponse);
+        } catch (error) {
+          console.error('Error parsing response as JSON:', error);
+
+          // Add if bot response is not json here will catch plain text
+          const botResponse = document.createElement('div');
+          botResponse.textContent = `Bot: ${responseText}`;
+          responseElement.appendChild(botResponse);
+        }
       } catch (error) {
-        console.error(error);
+        console.error('Error:', error);
+        const botResponse = document.createElement('div');
+        botResponse.textContent = `Bot: An error occurred - ${error.message}`;
+        responseElement.appendChild(botResponse);
       }
 
       inputElement.value = '';
     });
+
+
   </script>
 
 </body>
