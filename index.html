@@ -32,7 +32,8 @@
     const inputElement = document.getElementById('user-input');
     const sendButton = document.getElementById('send-button');
     const responseElement = document.getElementById('chat-log');
-    const apiEndPoint = 'http://localhost:2222/api/chat';
+    //add change endpoint to reflect where your calling
+    const apiEndPoint = 'http://localhost:11434/api/chat';
     // let conversationContext = '';
 
     sendButton.addEventListener('click', async () => {
@@ -46,7 +47,8 @@
 
       try {
         const requestBody = {
-          "model": "phi4:14b-q8_0",
+          "model" : "llama2",
+          // "model": "phi4:14b-q8_0",
           "messages": [{ "role": "user", "content": userInput }],
           "stream": false
         };
@@ -54,7 +56,7 @@
         const response = await fetch(apiEndPoint, {
           method: 'POST',
           mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json; charset=utf-8;' },
+          headers: { 'Content-Type': 'application/json;' },
           body: JSON.stringify(requestBody),
         });
 
