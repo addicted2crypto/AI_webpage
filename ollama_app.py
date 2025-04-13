@@ -95,6 +95,7 @@ def main():
     # Replace with your actual base URL
     base_url = 'http://localhost:2222'
     get_available_get_requests(base_url)
+    # Most endpoints are get request so check if post or get
     endpoint = '/api/chat'
     get_header_options(base_url, endpoint)
     send_post_request(base_url, endpoint)
