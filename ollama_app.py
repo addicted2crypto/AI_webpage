@@ -92,6 +92,7 @@ def send_get_request(base_url, endpoint):
         print(f"Error: {e}")
 
 def main():
+    # Replace with your actual base URL
     base_url = 'http://localhost:2222'
     get_available_get_requests(base_url)
     endpoint = '/api/chat'
