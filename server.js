@@ -15,7 +15,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//can implement any api key in this line.
+//can implement any api key in this line with correct path to chat post usually.
 const ollamaApiUrl = 'http://localhost:2222/api/chat';
 
 //this is currently set to http://localhost:11434/
