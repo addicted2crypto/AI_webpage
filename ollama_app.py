@@ -74,6 +74,7 @@ def send_get_request(base_url, endpoint):
             'mode' : 'GET, POST, GET, OPTIONS',
             'Content-Type': 'application/json',
             # Add any other required headers here
+            'bearer': 'CF_Session=nUKdQOvk42ET8F500'
         }
         response = requests.get(full_url, headers=headers)
         if response.status_code == 200:
@@ -93,7 +94,7 @@ def send_get_request(base_url, endpoint):
 
 def main():
     # Replace with your actual base URL
-    base_url = 'http://localhost:2222'
+    base_url = 'https://ai.ainetguard.com/api/chat'
     get_available_get_requests(base_url)
     # Most endpoints are get request so check if post or get
     endpoint = '/api/chat'
